@@ -1,4 +1,4 @@
-package com.example.android.trakt_client.di;
+package com.example.eduisters.mvvmtemplate.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

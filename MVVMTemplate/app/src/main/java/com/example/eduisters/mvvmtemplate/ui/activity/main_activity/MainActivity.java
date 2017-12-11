@@ -2,28 +2,34 @@ package com.example.eduisters.mvvmtemplate.ui.activity.main_activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.eduisters.mvvmtemplate.R;
 import com.example.eduisters.mvvmtemplate.ui.BaseActivity;
+import com.example.eduisters.mvvmtemplate.ui.fragment.main_fragment.MainFragment;
 
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainActivityViewModel>
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG_MAIN_FRAGMENT = MainFragment.class.getSimpleName();
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.fragmentPlaceholder) FrameLayout fragmentPlaceHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,15 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment frag = getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT);
+
+        if ( frag == null ) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragmentPlaceholder, new MainFragment(), TAG_MAIN_FRAGMENT)
+                    .commit();
+        }
     }
 
     @Override

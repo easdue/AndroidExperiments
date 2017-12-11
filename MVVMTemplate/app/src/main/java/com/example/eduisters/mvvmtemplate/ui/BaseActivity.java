@@ -17,11 +17,11 @@ import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
 
 /**
  * Created by Erik Duisters on 04-12-2017.
  */
-//TODO: Fragments
 public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity implements HasSupportFragmentInjector {
     //TODO: Call viewModel.start() somewhere
 
@@ -47,6 +47,8 @@ public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivi
         unbinder = ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass());
+
+        Timber.d("ViewModel = %s", viewModel);
 
         isFragmentStateLocked = true;
     }
