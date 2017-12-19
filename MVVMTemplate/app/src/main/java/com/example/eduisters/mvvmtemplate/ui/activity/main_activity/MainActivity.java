@@ -29,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import timber.log.Timber;
 
+//TODO: Save state in case the activity is destroyed because of limited resources
 public class MainActivity extends BaseActivity<MainActivityViewModel>
         implements NavigationView.OnNavigationItemSelectedListener {
 

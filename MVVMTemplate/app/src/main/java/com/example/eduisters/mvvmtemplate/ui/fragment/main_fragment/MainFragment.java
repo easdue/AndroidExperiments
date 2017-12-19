@@ -17,6 +17,7 @@ import butterknife.BindView;
  * Created by Erik Duisters on 08-12-2017.
  */
 //TODO: User MainFragmentViewModel to set the fragments textView text using LiveData
+//TODO: Save state in case the activity is destroyed because of limited resources
 public class MainFragment extends BaseFragment<MainFragmentViewModel> {
     @BindView(R.id.textView) TextView textView;
 
