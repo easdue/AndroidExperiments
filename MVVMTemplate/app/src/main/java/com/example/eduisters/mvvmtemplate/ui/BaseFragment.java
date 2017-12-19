@@ -29,8 +29,6 @@ import timber.log.Timber;
  */
 
 public abstract class BaseFragment<VM extends ViewModel> extends Fragment {
-    //TODO: ?inject childFragmentManager?
-    //TODO: Call viewModel.start() somewhere
     @Nullable
     Unbinder unbinder;
 

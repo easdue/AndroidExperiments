@@ -1,6 +1,8 @@
 package com.example.eduisters.mvvmtemplate.ui.activity.main_activity;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,12 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.eduisters.mvvmtemplate.R;
 import com.example.eduisters.mvvmtemplate.ui.BaseActivity;
 import com.example.eduisters.mvvmtemplate.ui.fragment.main_fragment.MainFragment;
+import com.example.eduisters.mvvmtemplate.util.MenuUtil;
+import com.example.eduisters.mvvmtemplate.util.MyMenuItem;
+
+import java.util.List;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity<MainActivityViewModel>
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +39,11 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.fragmentPlaceholder) FrameLayout fragmentPlaceHolder;
+    ImageView headerImageView;
+    TextView headerTitle;
+    TextView headerSubTitle;
+
+    List<MyMenuItem> optionsMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,11 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        headerImageView = headerView.findViewById(R.id.nav_header_image);
+        headerTitle = headerView.findViewById(R.id.nav_header_title);
+        headerSubTitle = headerView.findViewById(R.id.nav_header_sub_title);
+
         Fragment frag = getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT);
 
         if ( frag == null ) {
@@ -60,6 +79,28 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
                     .add(R.id.fragmentPlaceholder, new MainFragment(), TAG_MAIN_FRAGMENT)
                     .commit();
         }
+
+        Observer<MainActivityViewState> observer = new Observer<MainActivityViewState>() {
+            @Override
+            public void onChanged(@Nullable MainActivityViewState mainActivityViewState) {
+                render(mainActivityViewState);
+            }
+        };
+
+        viewModel.getViewState().observe(this, observer);
+    }
+
+    private void render(MainActivityViewState viewState) {
+        Timber.i("render(%s)", viewState);
+
+        headerImageView.setImageResource(viewState.navHeaderDrawableId);
+        headerTitle.setText(viewState.navHeaderTitleId);
+        headerSubTitle.setText(viewState.navheaderSubTitleId);
+
+        MenuUtil.updateMenu(navigationView.getMenu(), viewState.navigationItems);
+
+        optionsMenu = viewState.optionsMenu;
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -85,6 +126,15 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuUtil.updateMenu(menu, optionsMenu);
+
         return true;
     }
 

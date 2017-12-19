@@ -16,7 +16,7 @@ import butterknife.BindView;
 /**
  * Created by Erik Duisters on 08-12-2017.
  */
-
+//TODO: User MainFragmentViewModel to set the fragments textView text using LiveData
 public class MainFragment extends BaseFragment<MainFragmentViewModel> {
     @BindView(R.id.textView) TextView textView;
 

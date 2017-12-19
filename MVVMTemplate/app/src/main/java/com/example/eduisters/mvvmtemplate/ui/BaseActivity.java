@@ -23,8 +23,6 @@ import timber.log.Timber;
  * Created by Erik Duisters on 04-12-2017.
  */
 public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity implements HasSupportFragmentInjector {
-    //TODO: Call viewModel.start() somewhere
-
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
