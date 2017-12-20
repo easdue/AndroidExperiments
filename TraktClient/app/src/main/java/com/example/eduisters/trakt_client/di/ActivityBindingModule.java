@@ -22,12 +22,12 @@ public abstract class ActivityBindingModule {
     @Binds
     @IntoMap
     @ActivityKey(MainActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindHomeActivity(MainActivitySubComponent.Builder builder);
+    abstract AndroidInjector.Factory<? extends Activity> bindMainActivityInjetorFactory(MainActivitySubComponent.Builder builder);
 
     @Binds
     @IntoMap
     @ViewModelKey(MainActivityViewModel.class)
-    abstract ViewModel bindMailActivityViewModel(MainActivityViewModel viewModel);
+    abstract ViewModel bindMainActivityViewModel(MainActivityViewModel viewModel);
 
     // Other Activities go here
 }

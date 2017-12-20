@@ -3,17 +3,18 @@ package com.example.eduisters.trakt_client.vm;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.example.eduisters.trakt_client.di.ActivityScope;
+
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Singleton;
 
 /**
  * Created by Erik Duisters on 05-12-2017.
  */
 
-@Singleton
+@ActivityScope
 public class MyViewModelFactory implements ViewModelProvider.Factory {
     private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 

@@ -23,8 +23,6 @@ import dagger.android.support.HasSupportFragmentInjector;
  */
 
 public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity implements HasSupportFragmentInjector {
-    //TODO: Call viewModel.start() somewhere
-
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
